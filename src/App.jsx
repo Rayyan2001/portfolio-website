@@ -61,7 +61,7 @@ function Nav({ sections, active, onNavigate, theme, setTheme }) {
               <div className="absolute inset-0 rounded-xl bg-white/30 dark:bg-white/10 mix-blend-overlay"></div>
             </div>
             <span className="font-extrabold tracking-tight text-xl">
-              Anurag 
+              Anurag
             </span>
           </div>
           <div className="hidden md:flex items-center gap-1">
@@ -146,10 +146,11 @@ function Hero({ onOpenHiddenGallery }) {
                 View Portfolio
               </a>
               <a
-                href="#contact"
-                className="inline-flex items-center gap-2 rounded-xl border border-slate-900/10 dark:border-white/10 bg-white/70 dark:bg-white/5 px-5 py-3 text-sm font-semibold hover:bg-white/90 dark:hover:bg-white/10 transition-colors"
+                href="/resume.pdf"
+                download="Anurag_Paudel_CV.pdf"
+                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-br from-brand-500 to-fuchsia-500 px-5 py-3 text-sm font-semibold text-white shadow hover:shadow-md transition-shadow"
               >
-                Contact Me
+                Download CV
               </a>
             </div>
           </div>
@@ -223,13 +224,16 @@ function PortfolioSection() {
       title: "Simple Online Ecommerce Website from Scratch",
       description: "A simple online e-commerce website built from scratch.",
       tags: ["HTML", "CSS", "JavaScript"],
-      source: "https://github.com/Rayyan2001/Simple-Online-ecommerce-website-from-scratch",
+      source:
+        "https://github.com/Rayyan2001/Simple-Online-ecommerce-website-from-scratch",
     },
     {
       title: "Nepal stock prediction using LSMT, GRU, RF",
-      description: "Stock price forecasting using LSTM, GRU, and Random Forest.",
+      description:
+        "Stock price forecasting using LSTM, GRU, and Random Forest.",
       tags: ["ML", "Time Series", "Python"],
-      source: "https://github.com/Rayyan2001/Nepal-stock-prediction-using-LSMT--GRU--RF",
+      source:
+        "https://github.com/Rayyan2001/Nepal-stock-prediction-using-LSMT--GRU--RF",
     },
     {
       title: "Nepali License Plate recognition",
@@ -321,7 +325,6 @@ function ContactSection() {
               </button>
             </div>
           </form>
-
         </div>
       </div>
     </section>
@@ -467,26 +470,77 @@ function SkillIcon({ name }) {
       return (
         <svg {...commonProps}>
           <ellipse cx="12" cy="12" rx="9" ry="4.2"></ellipse>
-          <ellipse cx="12" cy="12" rx="9" ry="4.2" transform="rotate(60 12 12)"></ellipse>
-          <ellipse cx="12" cy="12" rx="9" ry="4.2" transform="rotate(-60 12 12)"></ellipse>
-          <circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none"></circle>
+          <ellipse
+            cx="12"
+            cy="12"
+            rx="9"
+            ry="4.2"
+            transform="rotate(60 12 12)"
+          ></ellipse>
+          <ellipse
+            cx="12"
+            cy="12"
+            rx="9"
+            ry="4.2"
+            transform="rotate(-60 12 12)"
+          ></ellipse>
+          <circle
+            cx="12"
+            cy="12"
+            r="1.7"
+            fill="currentColor"
+            stroke="none"
+          ></circle>
           {name === "React Native" ? (
-            <rect x="16.2" y="6.2" width="5" height="10.5" rx="1.2" fill="currentColor" opacity="0.35" stroke="none"></rect>
+            <rect
+              x="16.2"
+              y="6.2"
+              width="5"
+              height="10.5"
+              rx="1.2"
+              fill="currentColor"
+              opacity="0.35"
+              stroke="none"
+            ></rect>
           ) : null}
         </svg>
       );
     case "Python":
       return (
         <svg {...commonProps}>
-          <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor"></rect>
-          <text x="6.5" y="15" fontSize="8.5" fontFamily="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial" fill="currentColor">Py</text>
+          <rect
+            x="3"
+            y="3"
+            width="18"
+            height="18"
+            rx="3"
+            stroke="currentColor"
+          ></rect>
+          <text
+            x="6.5"
+            y="15"
+            fontSize="8.5"
+            fontFamily="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial"
+            fill="currentColor"
+          >
+            Py
+          </text>
         </svg>
       );
     case "Tailwind CSS":
       return (
         <svg {...commonProps}>
-          <path d="M4.5 13c1.6-3.2 3.6-4.8 6-4.8 1.2 0 2.2.4 3 .9.8.5 1.5 1.1 2.7 1.1 1.3 0 2.3-.6 3.3-1.8-1.6 3.2-3.6 4.8-6 4.8-1.2 0-2.2-.4-3-.9-.8-.5-1.5-1.1-2.7-1.1-1.3 0-2.3.6-3.3 1.8z" fill="currentColor" stroke="none"></path>
-          <path d="M4.5 18c1.6-3.2 3.6-4.8 6-4.8 1.2 0 2.2.4 3 .9.8.5 1.5 1.1 2.7 1.1 1.3 0 2.3-.6 3.3-1.8-1.6 3.2-3.6 4.8-6 4.8-1.2 0-2.2-.4-3-.9-.8-.5-1.5-1.1-2.7-1.1-1.3 0-2.3.6-3.3 1.8z" fill="currentColor" opacity="0.55" stroke="none"></path>
+          <path
+            d="M4.5 13c1.6-3.2 3.6-4.8 6-4.8 1.2 0 2.2.4 3 .9.8.5 1.5 1.1 2.7 1.1 1.3 0 2.3-.6 3.3-1.8-1.6 3.2-3.6 4.8-6 4.8-1.2 0-2.2-.4-3-.9-.8-.5-1.5-1.1-2.7-1.1-1.3 0-2.3.6-3.3 1.8z"
+            fill="currentColor"
+            stroke="none"
+          ></path>
+          <path
+            d="M4.5 18c1.6-3.2 3.6-4.8 6-4.8 1.2 0 2.2.4 3 .9.8.5 1.5 1.1 2.7 1.1 1.3 0 2.3-.6 3.3-1.8-1.6 3.2-3.6 4.8-6 4.8-1.2 0-2.2-.4-3-.9-.8-.5-1.5-1.1-2.7-1.1-1.3 0-2.3.6-3.3 1.8z"
+            fill="currentColor"
+            opacity="0.55"
+            stroke="none"
+          ></path>
         </svg>
       );
     case "Node.js":
@@ -494,22 +548,40 @@ function SkillIcon({ name }) {
         <svg {...commonProps}>
           <path d="M12 2.6 4 7v10l8 4.4 8-4.4V7L12 2.6z" fill="none"></path>
           <path d="M12 2.6 4 7v10l8 4.4 8-4.4V7L12 2.6z"></path>
-          <text x="8.2" y="15" fontSize="7.5" fontFamily="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial" fill="currentColor">JS</text>
+          <text
+            x="8.2"
+            y="15"
+            fontSize="7.5"
+            fontFamily="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial"
+            fill="currentColor"
+          >
+            JS
+          </text>
         </svg>
       );
     case "FastAPI":
       return (
         <svg {...commonProps}>
           <path d="M12 3l7 4v10l-7 4-7-4V7l7-4z"></path>
-          <path d="M12 7.5 9.5 13h2l-1.5 3.5 4.5-5.5h-2L14 7.5h-2z" fill="currentColor" stroke="none"></path>
+          <path
+            d="M12 7.5 9.5 13h2l-1.5 3.5 4.5-5.5h-2L14 7.5h-2z"
+            fill="currentColor"
+            stroke="none"
+          ></path>
         </svg>
       );
     case "SSMS":
       return (
         <svg {...commonProps}>
           <ellipse cx="12" cy="6.5" rx="6.5" ry="3"></ellipse>
-          <path d="M5.5 6.8v7.1c0 1.7 3 3.1 6.5 3.1s6.5-1.4 6.5-3.1V6.8" fill="none"></path>
-          <path d="M5.5 11.2c0 1.7 3 3.1 6.5 3.1s6.5-1.4 6.5-3.1" fill="none"></path>
+          <path
+            d="M5.5 6.8v7.1c0 1.7 3 3.1 6.5 3.1s6.5-1.4 6.5-3.1V6.8"
+            fill="none"
+          ></path>
+          <path
+            d="M5.5 11.2c0 1.7 3 3.1 6.5 3.1s6.5-1.4 6.5-3.1"
+            fill="none"
+          ></path>
         </svg>
       );
     default:
@@ -554,7 +626,9 @@ function SkillsSection() {
             >
               <SkillIcon name={s.name} />
               <div>
-                <div className="font-semibold text-base sm:text-lg">{s.name}</div>
+                <div className="font-semibold text-base sm:text-lg">
+                  {s.name}
+                </div>
                 <div className="mt-1 text-xs text-slate-500">{s.level}</div>
               </div>
             </div>
@@ -639,7 +713,10 @@ export default function App() {
       }
     };
     return (
-      <PortalGate onBack={refreshToHome} onSuccess={() => setRoute("/gallery-hidden")} />
+      <PortalGate
+        onBack={refreshToHome}
+        onSuccess={() => setRoute("/gallery-hidden")}
+      />
     );
   }
 
@@ -651,9 +728,7 @@ export default function App() {
         window.location.href = "/";
       }
     };
-    return (
-      <GalleryHidden onBack={refreshToHome} />
-    );
+    return <GalleryHidden onBack={refreshToHome} />;
   }
 
   return (
