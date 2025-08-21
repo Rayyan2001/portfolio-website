@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import me from "./assets/me.jpeg";
 import GalleryHidden from "./GalleryHidden.jsx";
+import resumePDF from "./assets/myresume.pdf"; // ✅ Your CV
 import PortalGate from "./PortalGate.jsx";
 
 function useTheme() {
@@ -96,7 +97,7 @@ function Nav({ sections, active, onNavigate }) {
               </svg>
             </button>
             <a
-              href="/myresume.pdf"
+              href={resumePDF}
               download="Anurag_Paudel_CV.pdf"
               className="hidden sm:inline-flex items-center gap-2 rounded-xl bg-gradient-to-br from-brand-500 to-fuchsia-500 px-4 py-2 text-sm font-semibold text-white shadow hover:shadow-md transition-shadow"
             >
@@ -180,7 +181,7 @@ function Hero({ onOpenHiddenGallery }) {
                 View Portfolio
               </a>
               <a
-                href="/resume.pdf"
+                href={resumePDF}
                 download="Anurag_Paudel_CV.pdf"
                 className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-br from-brand-500 to-fuchsia-500 px-5 py-3 text-sm font-semibold text-white shadow hover:shadow-md transition-shadow"
               >
