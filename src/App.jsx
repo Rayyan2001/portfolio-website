@@ -64,7 +64,7 @@ function Nav({ sections, active, onNavigate, theme, setTheme }) {
               Anurag
             </span>
           </div>
-          <div className="hidden md:flex items-center gap-1">
+          <div className="flex items-center gap-1 overflow-x-auto">
             {sections.map((s) => (
               <a
                 key={s.id}
