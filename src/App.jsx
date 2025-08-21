@@ -50,7 +50,9 @@ function ThemeToggle({ theme, setTheme }) {
   );
 }
 
-function Nav({ sections, active, onNavigate, theme, setTheme }) {
+function Nav({ sections, active, onNavigate }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
   return (
     <header className="fixed top-0 inset-x-0 z-40">
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -64,7 +66,7 @@ function Nav({ sections, active, onNavigate, theme, setTheme }) {
               Anurag
             </span>
           </div>
-          <div className="flex items-center gap-1 overflow-x-auto">
+          <div className="hidden md:flex items-center gap-1">
             {sections.map((s) => (
               <a
                 key={s.id}
@@ -84,17 +86,49 @@ function Nav({ sections, active, onNavigate, theme, setTheme }) {
             ))}
           </div>
           <div className="flex items-center gap-3 pr-3">
+            <button
+              className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl border border-slate-900/10 dark:border-white/10 bg-white/70 dark:bg-white/5 hover:bg-white/90 dark:hover:bg-white/10 transition-colors"
+              onClick={() => setMobileMenuOpen(prev => !prev)}
+              aria-label="Toggle mobile menu"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
             <a
-              href="/resume.pdf"
+              href="/myresume.pdf"
               download="Anurag_Paudel_CV.pdf"
               className="hidden sm:inline-flex items-center gap-2 rounded-xl bg-gradient-to-br from-brand-500 to-fuchsia-500 px-4 py-2 text-sm font-semibold text-white shadow hover:shadow-md transition-shadow"
             >
               Download CV
             </a>
-
-            <ThemeToggle theme={theme} setTheme={setTheme} />
           </div>
         </div>
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden mt-3 rounded-2xl border border-slate-900/10 dark:border-white/10 bg-white/70 dark:bg-slate-900/50 backdrop-blur shadow-sm p-4">
+            <div className="flex flex-col gap-2">
+              {sections.map((s) => (
+                <a
+                  key={s.id}
+                  href={`#${s.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate(s.id);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`px-4 py-3 text-sm font-medium rounded-xl transition-colors hover:text-brand-700 dark:hover:text-brand-300 ${
+                    active === s.id
+                      ? "text-brand-700 dark:text-brand-300 bg-brand-500/10"
+                      : "text-slate-700 dark:text-slate-300"
+                  }`}
+                >
+                  {s.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </nav>
     </header>
   );
@@ -734,12 +768,16 @@ export default function App() {
   return (
     <div ref={containerRef} className="min-h-screen">
       <div className="interactive-bg" aria-hidden="true"></div>
+      
+      {/* Theme Toggle - Fixed Position */}
+      <div className="fixed top-24 right-4 z-30">
+        <ThemeToggle theme={theme} setTheme={setTheme} />
+      </div>
+      
       <Nav
         sections={sections}
         active={active}
         onNavigate={handleNavigate}
-        theme={theme}
-        setTheme={setTheme}
       />
       <main className="pt-6">
         <Hero onOpenHiddenGallery={() => setRoute("/portal")} />

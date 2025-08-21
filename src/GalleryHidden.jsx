@@ -89,6 +89,7 @@ function Lightbox({ photo, onClose }) {
 export default function GalleryHidden({ onBack }) {
   const [selected, setSelected] = useState(null);
 
+  // Imported photos array
   const photos = useMemo(
     () => [
       {
@@ -143,6 +144,46 @@ export default function GalleryHidden({ onBack }) {
     []
   );
 
+  // Create tree structure automatically
+  const tree = useMemo(() => {
+    const groupA = photos.slice(0, 2); // Memories
+    const groupB = photos.slice(2, 4); // Joy
+    const groupC = photos.slice(4, 6); // Elegance
+    const groupD = photos.slice(6, 8); // Special
+
+    return {
+      title: "Hidden Album",
+      src: photos[0]?.src,
+      description: "Root collection",
+      children: [
+        {
+          title: "Memories",
+          src: groupA[0]?.src,
+          description: "Beautiful moments captured",
+          children: groupA.map((p) => ({ ...p })),
+        },
+        {
+          title: "Joy",
+          src: groupB[0]?.src,
+          description: "Happy times and smiles",
+          children: groupB.map((p) => ({ ...p })),
+        },
+        {
+          title: "Elegance",
+          src: groupC[0]?.src,
+          description: "Grace and beauty",
+          children: groupC.map((p) => ({ ...p })),
+        },
+        {
+          title: "Special",
+          src: groupD[0]?.src,
+          description: "Unique and precious moments",
+          children: groupD.map((p) => ({ ...p })),
+        },
+      ],
+    };
+  }, [photos]);
+
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape" && !selected) onBack();
@@ -176,7 +217,7 @@ export default function GalleryHidden({ onBack }) {
             A hidden collection with captions for each image.
           </p>
           <div className="mt-8">
-            <PhotoTree photos={photos} onSelect={(p) => setSelected(p)} />
+            <Tree node={tree} onSelectPhoto={(p) => setSelected(p)} />
           </div>
         </div>
       </main>
@@ -188,8 +229,16 @@ export default function GalleryHidden({ onBack }) {
   );
 }
 
-// Tree and PhotoTree components remain the same as your previous code
+// Tree component
+function Tree({ node, onSelectPhoto }) {
+  return (
+    <ul className="space-y-4">
+      <TreeNode node={node} onSelectPhoto={onSelectPhoto} />
+    </ul>
+  );
+}
 
+// TreeNode component
 function TreeNode({ node, onSelectPhoto }) {
   const [open, setOpen] = useState(true);
   const isLeaf = !node.children || node.children.length === 0;
@@ -261,54 +310,7 @@ function TreeNode({ node, onSelectPhoto }) {
   );
 }
 
-function PhotoTree({ photos, onSelect }) {
-  const points = useMemo(
-    () => [
-      { left: "18%", top: "62%" },
-      { left: "26%", top: "50%" },
-      { left: "34%", top: "40%" },
-      { left: "46%", top: "27%" },
-      { left: "54%", top: "19%" },
-      { left: "66%", top: "32%" },
-      { left: "74%", top: "46%" },
-      { left: "82%", top: "60%" },
-    ],
-    []
-  );
-
-  const getPhoto = (i) => photos[i % photos.length];
-
-  return (
-    <div className="relative w-full h-[820px] sm:h-[920px]">
-      {points.map((pos, i) => {
-        const p = getPhoto(i);
-        return (
-          <div
-            key={i}
-            className="absolute -translate-x-1/2 -translate-y-1/2 text-center"
-            style={{ left: pos.left, top: pos.top }}
-          >
-            <div className="mx-auto h-6 w-px bg-slate-400"></div>
-            <img
-              src={p.thumb}
-              alt={p.title}
-              loading="lazy"
-              decoding="async"
-              className="w-20 h-20 sm:w-24 sm:h-24 rounded-md object-cover shadow-lg border-4 border-white cursor-pointer hover:scale-105 transition-transform"
-              onClick={() => onSelect(p)}
-              draggable="false"
-            />
-            <div className="mt-2 text-xs sm:text-sm font-medium text-slate-700">
-              {p.title}
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-// CursorHearts component remains unchanged
+// CursorHearts component
 function CursorHearts() {
   const [hearts, setHearts] = useState([]);
 
