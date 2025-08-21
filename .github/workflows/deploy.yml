@@ -2,17 +2,13 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main, master]
+    branches: [ main, master ]
   workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -27,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: '18'
 
       - name: Install dependencies
         run: npm ci
@@ -38,18 +34,11 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      # 🔹 Cleanup old artifacts with the same name
-      - name: Delete previous GitHub Pages artifacts
-        run: |
-          gh api repos/${{ github.repository }}/actions/artifacts --jq '.artifacts[] | select(.name=="github-pages") | .id' | xargs -r -I {} gh api repos/${{ github.repository }}/actions/artifacts/{}/delete --method DELETE
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v1
         with:
-          path: "./dist"
+          path: './dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v1
