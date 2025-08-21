@@ -1,0 +1,31 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root { --mouse-x: 50vw; --mouse-y: 50vh; }
+.interactive-bg { position: fixed; inset: 0; pointer-events: none; z-index: -1; background:
+  radial-gradient(650px at var(--mouse-x) var(--mouse-y), rgba(99,102,241,0.25), transparent 50%),
+  radial-gradient(500px at calc(var(--mouse-x) - 20vw) calc(var(--mouse-y) + 20vh), rgba(16,185,129,0.18), transparent 55%),
+  radial-gradient(700px at calc(var(--mouse-x) + 25vw) calc(var(--mouse-y) - 15vh), rgba(236,72,153,0.15), transparent 60%);
+  transition: background 120ms linear; }
+.dark .interactive-bg { background:
+  radial-gradient(700px at var(--mouse-x) var(--mouse-y), rgba(99,102,241,0.22), transparent 55%),
+  radial-gradient(550px at calc(var(--mouse-x) - 25vw) calc(var(--mouse-y) + 20vh), rgba(20,184,166,0.18), transparent 60%),
+  radial-gradient(800px at calc(var(--mouse-x) + 25vw) calc(var(--mouse-y) - 20vh), rgba(168,85,247,0.17), transparent 60%); }
+.grid-overlay::before { content: ""; position: fixed; inset: 0; background-image:
+  linear-gradient(to right, rgba(100,116,139,0.05) 1px, transparent 1px),
+  linear-gradient(to bottom, rgba(100,116,139,0.05) 1px, transparent 1px);
+  background-size: 36px 36px; pointer-events: none; z-index: -1; }
+
+/* Reveal on scroll */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity 400ms ease, transform 500ms ease; }
+.reveal-visible { opacity: 1; transform: translateY(0); }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .interactive-bg { background: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
