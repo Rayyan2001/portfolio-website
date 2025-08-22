@@ -88,6 +88,15 @@ function Lightbox({ photo, onClose }) {
 // Main Gallery Component
 export default function GalleryHidden({ onBack }) {
   const [selected, setSelected] = useState(null);
+  const [visitCount, setVisitCount] = useState(0);
+
+  // Track visits to the hidden gallery
+  useEffect(() => {
+    const currentCount = parseInt(localStorage.getItem('hiddenGalleryVisits') || '0');
+    const newCount = currentCount + 1;
+    localStorage.setItem('hiddenGalleryVisits', newCount.toString());
+    setVisitCount(newCount);
+  }, []);
 
   // Imported photos array
   const photos = useMemo(
@@ -193,18 +202,26 @@ export default function GalleryHidden({ onBack }) {
   }, [onBack, selected]);
 
   return (
-    <div className="min-h-screen bg-blue-50 text-slate-900 dark:bg-blue-50 dark:text-slate-900 relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden">
+      <div className="interactive-bg" aria-hidden="true"></div>
       <CursorHearts />
 
       <header className="sticky top-0 z-30 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white/80 backdrop-blur px-4 py-3 shadow-sm">
-          <div className="font-semibold">Secret Gallery</div>
-          <button
-            onClick={onBack}
-            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-br from-brand-500 to-fuchsia-500 px-4 py-2 text-sm font-semibold text-white shadow hover:shadow-md transition-shadow"
-          >
-            ← Back
-          </button>
+        <div className="flex items-center justify-between rounded-2xl borderfrom-teal-500 to-blue-500 backdrop-blur px-4 py-3 shadow-sm">
+          {/* <div className="font-semibold">Secret Gallery</div> */}
+          <div className="flex items-center gap-3">
+            {/* Visit Counter with Eye Icon */}
+            <div className="flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-lg text-white text-sm font-medium">
+              <span className="text-lg">👁️</span>
+              <span>{visitCount}</span>
+            </div>
+            <button
+              onClick={onBack}
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-br from-brand-500 to-fuchsia-500 px-4 py-2 text-sm font-semibold text-white shadow hover:shadow-md transition-shadow"
+            >
+              ← Back
+            </button>
+          </div>
         </div>
       </header>
 

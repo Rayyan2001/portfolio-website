@@ -193,7 +193,7 @@ function Hero({ onOpenHiddenGallery }) {
             <div
               className="relative mx-auto w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80"
               onDoubleClick={onOpenHiddenGallery}
-              title="Double‑click to open a hidden gallery"
+              // title="Double‑click to open a hidden gallery"
             >
               <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-fuchsia-500 via-brand-500 to-emerald-400 blur-2xl opacity-30 animate-pulse"></div>
               <div className="relative rounded-full w-full h-full p-1 bg-gradient-to-tr from-brand-500 to-fuchsia-500">
@@ -394,7 +394,7 @@ function Footer() {
               Contact
             </a>
             <a
-              href="https://github.com/anurag"
+              href="https://github.com/Rayyan2001/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
