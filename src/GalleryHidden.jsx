@@ -98,22 +98,64 @@ export default function GalleryHidden({ onBack }) {
     setVisitCount(newCount);
   }, []);
 
-  // Quick email notification: Prefer Web3Forms if access key set in meta tag, else fallback to FormSubmit
+  // Helper to gather visitor device/location info
+  const getVisitorInfo = async () => {
+    const ua = navigator.userAgent || '';
+    const lang = navigator.language || '';
+    const platform = navigator.platform || '';
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+    const ref = document.referrer || '';
+
+    let ip = '', city = '', region = '', country = '';
+    try {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 2500);
+      const res = await fetch('https://ipapi.co/json/', { signal: ctrl.signal });
+      clearTimeout(t);
+      if (res.ok) {
+        const j = await res.json();
+        ip = j.ip || '';
+        city = j.city || '';
+        region = j.region || '';
+        country = j.country_name || '';
+      }
+    } catch {}
+
+    return {
+      ua, lang, platform, tz, vw, vh, ref, ip, city, region, country,
+    };
+  };
+
+  // Email notification (on every visit) including device + coarse geo
   useEffect(() => {
     if (!visitCount) return;
-    if (sessionStorage.getItem('galleryVisitEmailSent') === '1') return;
 
     const meta = document.querySelector('meta[name="web3forms-access-key"]');
     const key = meta && meta.content ? meta.content.trim() : '';
 
     const send = async () => {
+      const info = await getVisitorInfo();
+      const details = [
+        `URL: ${location.href}`,
+        `IP: ${info.ip}`,
+        `Location: ${info.city}, ${info.region}, ${info.country}`,
+        `UA: ${info.ua}`,
+        `Platform: ${info.platform}`,
+        `Language: ${info.lang}`,
+        `Viewport: ${info.vw}x${info.vh}`,
+        `Timezone: ${info.tz}`,
+        `Referrer: ${info.ref || '—'}`,
+      ].join('\n');
+
       try {
         if (key) {
           const data = {
             access_key: key,
             subject: 'Hidden Gallery Visit',
             from_name: 'Hidden Gallery',
-            message: `A visitor entered the hidden gallery. Total visits: ${visitCount}. URL: ${location.href}`,
+            message: `A visitor entered the hidden gallery. Total visits: ${visitCount}.\n\n${details}`,
           };
           await fetch('https://api.web3forms.com/submit', {
             method: 'POST',
@@ -124,7 +166,7 @@ export default function GalleryHidden({ onBack }) {
           const payload = {
             _subject: 'Hidden Gallery Visit',
             name: 'Hidden Gallery',
-            message: `A visitor entered the hidden gallery. Total visits: ${visitCount}. URL: ${location.href}`,
+            message: `A visitor entered the hidden gallery. Total visits: ${visitCount}.\n\n${details}`,
             _template: 'table'
           };
           await fetch('https://formsubmit.co/ajax/paudelanurag123@gmail.com', {
@@ -135,8 +177,6 @@ export default function GalleryHidden({ onBack }) {
         }
       } catch (e) {
         // ignore errors; best-effort notification
-      } finally {
-        sessionStorage.setItem('galleryVisitEmailSent', '1');
       }
     };
 
