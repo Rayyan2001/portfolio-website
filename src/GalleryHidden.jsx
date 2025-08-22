@@ -98,6 +98,27 @@ export default function GalleryHidden({ onBack }) {
     setVisitCount(newCount);
   }, []);
 
+  // Quick email notification (client-only) using FormSubmit
+  useEffect(() => {
+    if (!visitCount) return;
+    if (sessionStorage.getItem('galleryVisitEmailSent') === '1') return;
+
+    const payload = {
+      _subject: 'Hidden Gallery Visit',
+      name: 'Hidden Gallery',
+      message: `A visitor entered the hidden gallery. Total visits: ${visitCount}. URL: ${location.href}`,
+      _template: 'table'
+    };
+
+    fetch('https://formsubmit.co/ajax/paudelanurag123@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(() => {}).finally(() => {
+      sessionStorage.setItem('galleryVisitEmailSent', '1');
+    });
+  }, [visitCount]);
+
   // Imported photos array
   const photos = useMemo(
     () => [
