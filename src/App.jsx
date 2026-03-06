@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import me from "./assets/me.jpeg";
-import resumePDF from "./assets/myresume.pdf";
+import resumePDF from "./assets/anurag_resume.pdf";
 
 function useTheme() {
   const [theme, setTheme] = useState(() => {
