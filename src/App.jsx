@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import me from "./assets/me.jpeg";
+import me from "./assets/me.png";
 import resumePDF from "./assets/anurag_resume.pdf";
 
 /* ─── Theme hook ─── */
