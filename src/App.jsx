@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import me from "./assets/me.png";
+import svg from "./assets/svg.png";
 import resumePDF from "./assets/anurag_resume.pdf";
 
 /* ─── Theme hook ─── */
@@ -62,7 +63,7 @@ function Nav({ sections, active, onNavigate, theme, setTheme }) {
           <div className="flex items-center gap-2.5">
             <div className="relative h-8 w-8 rounded-xl animate-float shadow-lg shadow-indigo-500/30 overflow-hidden">
               <img
-                src="/src/assets/svg.png"
+                src={svg}
                 alt="logo"
                 className="w-full h-full object-cover"
               />
