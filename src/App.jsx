@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import me from "./assets/me.png";
-import svg from "./assets/svg.png";
+import svg from "./assets/me.png";
 import resumePDF from "./assets/anurag_resume.pdf";
 
 /* ─── Theme hook ─── */
