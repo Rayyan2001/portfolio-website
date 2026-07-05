@@ -448,6 +448,90 @@ function PortfolioSection() {
   );
 }
 
+/* ─── Deployed / Live Demos (Streamlit) ─── */
+const STREAMLIT_PROFILE_URL = "https://share.streamlit.io/user/paudelanurag";
+
+function DeployedSection() {
+  // Streamlit Community Cloud puts free-tier apps to sleep after a period of
+  // inactivity. We can't bypass CORS to confirm state, but firing a
+  // best-effort "wake" request before opening the link gives sleeping apps a
+  // head start on spinning back up, so it's ready sooner once the tab opens.
+  const [status, setStatus] = useState("idle"); // idle | waking | opened
+
+  const handleWake = async () => {
+    setStatus("waking");
+    try {
+      // no-cors: we can't read the response, but the request itself is
+      // enough to nudge a sleeping Streamlit container awake.
+      await fetch(STREAMLIT_PROFILE_URL, { method: "GET", mode: "no-cors" });
+    } catch {
+      // Network/CORS errors are expected here and safe to ignore.
+    } finally {
+      window.open(STREAMLIT_PROFILE_URL, "_blank", "noopener,noreferrer");
+      setStatus("opened");
+      setTimeout(() => setStatus("idle"), 2500);
+    }
+  };
+
+  return (
+    <section id="deployed" className="scroll-mt-24 py-20 sm:py-24 reveal">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <p className="text-xs font-bold tracking-widest uppercase text-indigo-500 dark:text-indigo-400 mb-2">Live demos</p>
+        <h2 className="text-3xl sm:text-4xl font-black tracking-tight" style={{ fontFamily: "'Clash Display', sans-serif" }}>
+          Deployed on Streamlit
+        </h2>
+        <div className="section-divider" />
+
+        <div className="glass rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-6">
+          <div className="flex-1">
+            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+              All of my basic Python and ML projects are deployed and browsable live on{" "}
+              <strong className="text-slate-800 dark:text-white font-semibold">Streamlit Community Cloud</strong>{" "}
+              — no setup required, just open and try them in your browser.
+            </p>
+            <p className="mt-3 text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              Free-tier apps fall asleep after a while without visitors. If a demo looks idle,
+              give it a moment to spin up — or use the button below, which pings the apps
+              before opening them.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-stretch sm:items-end gap-2.5 sm:w-56 flex-shrink-0">
+            <button
+              onClick={handleWake}
+              disabled={status === "waking"}
+              className="btn-primary w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {status === "waking" ? (
+                <>
+                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  Waking apps…
+                </>
+              ) : (
+                <>
+                  <span className="text-base">⏰</span>
+                  To Deployed
+                </>
+              )}
+            </button>
+            <a
+              href={STREAMLIT_PROFILE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors underline underline-offset-2"
+            >
+              share.streamlit.io/user/paudelanurag
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─── Contact ─── */
 // Uses EmailJS to send directly to paudelanurag34@gmail.com
 // Setup: https://www.emailjs.com — replace SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY below
@@ -722,6 +806,7 @@ export default function App() {
     { id: "about", label: "About" },
     { id: "skills", label: "Skills" },
     { id: "portfolio", label: "Portfolio" },
+    { id: "deployed", label: "Live Demos" },
     { id: "contact", label: "Contact" },
   ];
 
@@ -780,6 +865,7 @@ export default function App() {
         <AboutSection />
         <SkillsSection />
         <PortfolioSection />
+        <DeployedSection />
         <ContactSection />
       </main>
       <Footer />
